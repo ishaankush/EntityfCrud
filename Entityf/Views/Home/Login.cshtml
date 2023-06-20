@@ -6,8 +6,8 @@
 }
 <h1>Login to continue</h1>
 <form method="post" action="login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnedUrl)">
-    <input type="text" name="username" placeholder="username" />
-    <input type="password" name="password" placeholder="pasword" />
+    <input type="text" name="username" placeholder="username" required />
+    <input type="password" name="password" placeholder="pasword" required />
     <input type="submit" name="submit" />
 </form>
 

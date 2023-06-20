@@ -172,32 +172,23 @@ namespace Entityf.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             using (var db = new DemoContext())
             {
-                
-                var user = db.Users.FirstOrDefault(u => u.Id == id);
-
-                if (user == null)
-                {
-                    // User not found
-                    return NotFound();
-                }
-
-               
+                var user = db.Users.FirstOrDefault(u => u.Id == id);         
                 return View(user);
             }
         }
 
         [HttpPost]
-        public IActionResult Update(UserModel user)
+        public IActionResult Edit(UserModel user)
         {
             if (ModelState.IsValid)
             {
                 using (var db = new DemoContext())
                 {
-                  
                     var existingUser = db.Users.FirstOrDefault(u => u.Id == user.Id);
 
                     if (existingUser == null)
@@ -205,7 +196,7 @@ namespace Entityf.Controllers
                         return NotFound();
                     }
 
-                   
+                    existingUser.Id = user.Id;
                     existingUser.Name = user.Name;
                     existingUser.Email = user.Email;
                     existingUser.UserName = user.UserName;
@@ -215,19 +206,14 @@ namespace Entityf.Controllers
                     existingUser.DateOfBirth = user.DateOfBirth;
                     existingUser.Age = user.Age;
 
-                    db.Update(user);
-                    db.SaveChanges();
-                    
-                    //db.SaveChanges();
+                    db.SaveChanges(); // Update the existing user in the database
 
                     return RedirectToAction("AddUsers");
                 }
             }
 
-            return View();
+            return View(user);
         }
-
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
